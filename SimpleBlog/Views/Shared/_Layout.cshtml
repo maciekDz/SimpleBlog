@@ -15,7 +15,22 @@
         <h1>
             <a href="@Url.RouteUrl("Home")">Simple Blog</a>
         </h1>
-        <a href="@Url.RouteUrl("Login")">Login</a>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p>Welcome back, @User.Identity.Name</p>
+            <a href="@Url.RouteUrl("logout")">Logout</a>
+
+            if (User.IsInRole("admin"))
+            {
+                <a href="@Url.Action("Index","Posts",new { area="admin"})"<a>View posts in admin</a>
+            }
+        }
+        else
+        {
+            <a href="@Url.RouteUrl("Login")">Login</a>
+        }
+
     </header>
 
     @RenderBody()
@@ -24,6 +39,6 @@
         &copy; @DateTime.Now.Year - Simple Blog
     </footer>
 
-    @RenderSection("Scripts",required:false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
