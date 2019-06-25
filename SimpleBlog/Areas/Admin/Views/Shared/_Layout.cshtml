@@ -34,9 +34,9 @@
                 @Html.RouteLink("Back to Website", "Home")
             </li>
         </ul>
+        @RenderBody()
     </div>
 
-    @RenderBody()
 
     @Scripts.Render("~/admin/scripts")
     @RenderSection("Scripts", required: false)
