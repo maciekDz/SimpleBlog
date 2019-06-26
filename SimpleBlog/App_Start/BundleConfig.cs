@@ -11,8 +11,8 @@ namespace SimpleBlog.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle ("~/admin/styles")
-                .Include("~/content/styles/bootstrap.css")
-                .Include("~/content/styles/Admin.css"));
+                .Include("~/Content/Styles/bootstrap.css")
+                .Include("~/Content/Styles/Admin.css"));
 
             bundles.Add(new StyleBundle("~/styles")
                 .Include("~/content/styles/bootstrap.css")
@@ -22,7 +22,8 @@ namespace SimpleBlog.App_Start
                 .Include("~/scripts/jquery-3.4.1.js")
                 .Include("~/scripts/jquery.validate.js")
                 .Include("~/scripts/jquery.validate.unobtrusive.js")
-                .Include("~/scripts/bootstrap.js"));
+                .Include("~/scripts/bootstrap.js")
+                .Include("~/Areas/Admin/Scripts/Forms.js"));
 
             bundles.Add(new ScriptBundle("~/scripts")
                 .Include("~/scripts/jquery-3.4.1.js")

@@ -30,11 +30,11 @@
                             <i class="glyphicon glyphicon-edit"></i>
                             Edit
                         </a>
-                        <a href="#" class="btn btn-xs btn-default">
+                        <a href="@Url.Action("ResetPassword",new { user.UserId})" class="btn btn-xs btn-default">
                             <i class="glyphicon glyphicon-lock"></i>
                             Reset Password
                         </a>
-                        <a href="#" class="btn btn-xs btn-danger">
+                        <a href="@Url.Action("Delete",new { user.UserId})" class="btn btn-xs btn-danger" data-post="Are you sure you want to delete @user.UserName?">
                             <i class="glyphicon glyphicon-remove"></i>
                             Delete
                         </a>
@@ -43,5 +43,5 @@
             </tr>
         }
     </tbody>
-
 </table>
+
