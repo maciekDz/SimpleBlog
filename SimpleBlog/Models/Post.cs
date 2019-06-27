@@ -18,9 +18,9 @@ namespace SimpleBlog.Models
 
         public virtual DateTime CreatedAt { get; set; }
         public virtual DateTime? UpdatedAt { get; set; }
-        public virtual DateTime? DeletedtAt { get; set; }
+        public virtual DateTime? DeletedAt { get; set; }
 
-        public virtual bool IsDeleted { get { return DeletedtAt != null; } }
+        public virtual bool IsDeleted { get { return DeletedAt != null; } }
 
         public virtual IList<Tag> Tags { get; set; }
     }
@@ -29,7 +29,7 @@ namespace SimpleBlog.Models
     {
         public PostMap()
         {
-            Table("Users");
+            Table("Posts");
 
             ManyToOne(x => x.User, x =>
                {
@@ -43,7 +43,7 @@ namespace SimpleBlog.Models
             Property(x => x.Content, x =>x.NotNullable(true));
             Property(x => x.CreatedAt, x => x.NotNullable(true));
             Property(x => x.UpdatedAt);
-            Property(x => x.DeletedtAt);
+            Property(x => x.DeletedAt);
 
             Bag(x => x.Tags, x =>
             {
