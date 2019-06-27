@@ -19,6 +19,13 @@ namespace SimpleBlog.Models
         public virtual string Email { get; set; }
         public virtual string PasswordHash { get; set; }
 
+        public virtual IList<Role> Roles { get; set; }
+
+        public User()
+        {
+            Roles = new List<Role>();
+        }
+
         public virtual void SetPassword(string password)
         {
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password,13);
@@ -42,7 +49,14 @@ namespace SimpleBlog.Models
             {
                 x.Column("PasswordHash");//dummy case if column name was different than property name
                 x.NotNullable(true);
-            }); 
+            });
+
+            Bag(x => x.Roles, x =>
+            {
+                x.Table("UserRoles");
+                x.Key(k => k.Column("UserId"));
+
+            },x=>x.ManyToMany(k=>k.Column("RoleId")));
         }
     }
 }

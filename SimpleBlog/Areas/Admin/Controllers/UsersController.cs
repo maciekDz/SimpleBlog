@@ -24,25 +24,32 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
         public ActionResult New()
         {
-            return View(new UsersNew { });
+            return View(new UsersNew
+            {
+                Roles = Database.Session.Query<Role>().Select(role => new RoleCheckbox
+                {
+                    Id=role.RoleId,
+                    IsChecked=false,
+                    Name=role.RoleName
+                }).ToList()
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult New(UsersNew form)
         {
+            var user = new User();
+            SyncRoels(form.Roles, user.Roles);
+
             if (Database.Session.Query<User>().Any(u => u.UserName == form.UserName))
                 ModelState.AddModelError("UserName", "User Name must be unique");
 
             if (!ModelState.IsValid)
                 return View(form);
 
-            var user = new User
-            {
-                Email = form.Email,
-                UserName = form.UserName
-            };
-
+            user.Email = form.Email;
+            user.UserName = form.UserName;            
             user.SetPassword(form.Password);
             Database.Session.Save(user);
 
@@ -58,7 +65,13 @@ namespace SimpleBlog.Areas.Admin.Controllers
             return View(new UsersEdit
             {
                 UserName = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                Roles = Database.Session.Query<Role>().Select(role => new RoleCheckbox
+                {
+                    Id = role.RoleId,
+                    IsChecked = user.Roles.Contains(role),
+                    Name = role.RoleName
+                }).ToList()
             });
         }
 
@@ -69,6 +82,8 @@ namespace SimpleBlog.Areas.Admin.Controllers
             var user = Database.Session.Load<User>(userId);
             if (user == null)
                 return HttpNotFound();
+
+            SyncRoels(form.Roles, user.Roles);
 
             if (Database.Session.Query<User>().Any(u => u.UserName == form.UserName && u.UserId!=userId))
                 ModelState.AddModelError("UserName", "User Name must be unique");
@@ -128,6 +143,26 @@ namespace SimpleBlog.Areas.Admin.Controllers
             Database.Session.Delete(user);
 
             return RedirectToAction("Index");
+        }
+
+        private void SyncRoels(IList<RoleCheckbox> checkboxex,IList<Role> roles)
+        {
+            var selectedRoles = new List<Role>();
+
+            foreach (var role in Database.Session.Query<Role>())
+            {
+                var checkbox = checkboxex.Single(c => c.Id == role.RoleId);
+                checkbox.Name = role.RoleName;
+
+                if (checkbox.IsChecked)
+                    selectedRoles.Add(role);
+            }
+
+            foreach (var toAdd in selectedRoles.Where(t => !roles.Contains(t)))
+                roles.Add(toAdd);
+
+            foreach (var toRemove in roles.Where(t => !selectedRoles.Contains(t)).ToList())
+                roles.Remove(toRemove);
         }
     }
 }
