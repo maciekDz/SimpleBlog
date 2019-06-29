@@ -1710,9 +1710,17 @@ th {
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
+.table-striped > tbody > tr:nth-child(odd) > th{
   background-color: #f9f9f9;
 }
+
+/*added to override default behaviour. previousely I couldn't apply another class (danger) on a stripped table row*/
+/*.table-striped > tbody > tr > .danger,
+.table-striped > tbody > .danger > td,
+.table-striped > tbody > .danger > th {
+    background-color:red;
+}*/
+
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
