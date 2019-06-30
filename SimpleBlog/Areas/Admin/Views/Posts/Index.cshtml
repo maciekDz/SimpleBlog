@@ -69,14 +69,14 @@
                     @if (!post.IsDeleted)
                     {
                         <div class="btn-group btn-group-xs">
-                            <a href="#" class="btn btn-danger">
+                            <a href="@Url.Action("Trash", new { post.PostId})" class="btn btn-danger" data-post="Are you sure you want to trash this post?">
                                 <i class="glyphicon glyphicon-remove"></i> Trash
                             </a>
-                            
-                            <a href="@Url.Action("Trash")" id="myDropdown" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+
+                            <a id="myDropdown" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="onlyNowDropdownWorks"><span class="caret"></span></a> 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="@Url.Action("Delete")">
+                                    <a href="@Url.Action("Delete", new { post.PostId})" data-post="Are you sure you want to delete this post forever?">
                                         <i class="glyphicon glyphicon-remove"></i> Delete
                                     </a>
                                 </li>
@@ -85,7 +85,7 @@
                     }
                     else
                     {
-                        <a href="#" class="btn btn-xs btn-success">
+                        <a href="@Url.Action("Restore", new { post.PostId})" class="btn btn-xs btn-success" data-post="">
                             <i class="glyphicon glyphicon-plus-sign"></i> Restore
                         </a>
                     }
@@ -96,4 +96,3 @@
     </tbody>
 
 </table>
-
