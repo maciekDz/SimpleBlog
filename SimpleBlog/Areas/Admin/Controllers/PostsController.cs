@@ -34,9 +34,15 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
         public ActionResult New()
         {
-            return View("Form",new PostsForm
+            return View("Form", new PostsForm
             {
-                IsNew=true
+                IsNew = true,
+                Tags = Database.Session.Query<Tag>().Select(tag => new TagCheckbox
+                {
+                    TagId = tag.TagId,
+                    Name = tag.Name,
+                    IsChecked = false
+                }).ToList()
             });
         }
 
@@ -52,7 +58,14 @@ namespace SimpleBlog.Areas.Admin.Controllers
                 PostId = post.PostId,
                 Title = post.Title,
                 Slug = post.Slug,
-                Content = post.Content
+                Content = post.Content,
+                Tags = Database.Session.Query<Tag>().Select(tag => new TagCheckbox
+                {
+                    TagId = tag.TagId,
+                    Name = tag.Name,
+                    IsChecked = post.Tags.Contains(tag)
+                }).ToList()
+
             });
         }
 
