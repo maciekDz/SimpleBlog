@@ -18,6 +18,33 @@ namespace SimpleBlog
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "PostForReal",
+                url: "post/{idAndSlug}",
+                namespaces: myNamespaces,
+                defaults: new { controller = "Posts", action = "Show" }
+            );
+
+            routes.MapRoute(
+                name: "Post",
+                url: "post/{postId}-{slug}",
+                namespaces: myNamespaces,
+                defaults: new { controller = "Posts", action = "Show" }
+            );
+
+            routes.MapRoute(
+                name: "TagsForReal",
+                url: "tag/{idAndSlug}",
+                namespaces: myNamespaces,
+                defaults: new { controller = "Posts", action = "Tag" }
+            );
+            routes.MapRoute(
+                name: "Tag",
+                url: "tag/{tagId}-{slug}",
+                namespaces: myNamespaces,
+                defaults: new { controller = "Posts", action = "Tag" }
+            );
+
+            routes.MapRoute(
                 name: "Login",
                 url: "login",
                 namespaces: myNamespaces,
