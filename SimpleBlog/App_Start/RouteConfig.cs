@@ -64,6 +64,14 @@ namespace SimpleBlog
                 namespaces: myNamespaces,
                 defaults: new { controller = "Posts", action = "Index" }
             );
+
+            routes.MapRoute(
+                name: "Sidebar",
+                url: "Sidebar",
+                namespaces: myNamespaces,
+                defaults: new { controller = "Layout", action = "Sidebar" }
+            );
+
         }
     }
 }
